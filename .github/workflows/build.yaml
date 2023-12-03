@@ -1,0 +1,26 @@
+name: Go
+
+on:
+  push:
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.21'
+
+      - name: Build
+        run: go build -v -o fileserver
+
+      - name: Upload
+        uses: actions/upload-artifact@v3.1.3
+        with:
+          path: fileserver
+          if-no-files-found: error
+          retention-days: 10
